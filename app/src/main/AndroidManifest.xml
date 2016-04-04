@@ -29,6 +29,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.mkai.pry.LogInActivity" />
         </activity>
+        <activity
+            android:name=".ResultActivity"
+            android:label="@string/title_activity_result"
+            android:parentActivityName=".SubscriptionActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.mkai.pry.SubscriptionActivity" />
+        </activity>
     </application>
 
 </manifest>

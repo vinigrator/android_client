@@ -10,10 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.mkai.pry.TestActivity"
-    tools:showIn="@layout/activity_test">
+    tools:showIn="@layout/activity_test"
+    android:background="?android:attr/activatedBackgroundIndicator">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+
+    <ListView
+        android:id="@+id/subsListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
