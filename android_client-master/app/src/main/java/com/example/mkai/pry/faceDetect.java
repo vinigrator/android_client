@@ -31,6 +31,7 @@ public class faceDetect extends AppCompatActivity {
             bitmap = (Bitmap) intent.getExtras().getParcelable("bmp");
         //    iv.setImageBitmap(bmp);
         }
+
         if(status.contentEquals("uri"))
         {
             Uri u = (Uri)intent.getExtras().getParcelable("uri");
