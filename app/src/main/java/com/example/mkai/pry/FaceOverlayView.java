@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,11 +16,14 @@ import android.widget.ImageView;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.*;
 
+import java.util.Calendar;
+
 /**
  * Created by Антон on 05.04.2016.
  */
 public class FaceOverlayView extends ImageView {
 
+    private static final String LOG_TAG = "MyLogTiming:";
     private Bitmap mBitmap;
     private SparseArray<Face> mFaces;
     private int chX =-1;
@@ -55,14 +59,18 @@ public class FaceOverlayView extends ImageView {
         FaceDetector detector = new FaceDetector.Builder( getContext() )
                 .setTrackingEnabled(false)
                 .setLandmarkType(FaceDetector.ALL_LANDMARKS)
-                .setMode(FaceDetector.FAST_MODE)
+                .setMode(FaceDetector.ACCURATE_MODE)
                 .build();
 
         if (!detector.isOperational()) {
             //Handle contingency
         } else {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            long strtD = Calendar.getInstance().getTimeInMillis();
+            //Log.v(LOG_TAG, "Start Detect:" + Calendar.getInstance().getTimeInMillis());
             mFaces = detector.detect(frame);
+            long strtFD = Calendar.getInstance().getTimeInMillis();
+            Log.v(LOG_TAG, "DETECTING: " + (strtFD - strtD) );
             detector.release();
         }
         invalidate();

@@ -16,5 +16,6 @@
     </string>
     <!-- menu item -->
     <string name="action_settings">Настройки</string>
+    <string name="action_gallery">Выбрать из галереи</string>
     <string name="action_logout">Выйти из учетной записи</string>
 </resources>

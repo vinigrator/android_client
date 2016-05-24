@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -43,8 +44,7 @@ public class SubscriptionActivity extends AppCompatActivity {
         subsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Log.d(LOG_TAG, subsListView.getItemAtPosition(position).toString() + " itemClick: position = " + position + ", id = "
-                        + id);
+                Log.d(LOG_TAG, subsListView.getItemAtPosition(position).toString() + " itemClick: position = " + position + ", id = " + id);
                 Intent intent = new Intent(SubscriptionActivity.this, ResultActivity.class);
                 startActivity(intent);
             }
@@ -78,7 +78,12 @@ public class SubscriptionActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }else if (id == R.id.action_gallery){
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,6 +101,7 @@ public class SubscriptionActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_photo:
+
                 Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 Time time = new Time();
                 time.setToNow();
@@ -112,6 +118,11 @@ public class SubscriptionActivity extends AppCompatActivity {
                 mOutputFileUri = Uri.fromFile(file);
                 camIntent.putExtra(MediaStore.EXTRA_OUTPUT, mOutputFileUri);
                 startActivityForResult(camIntent, CAM_REQUEST);
+                break;
+            case R.id.action_gallery:
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
                 break;
             default:
                 break;
@@ -139,14 +150,19 @@ public class SubscriptionActivity extends AppCompatActivity {
                 intent.putExtra("uri", mOutputFileUri);
                 intent.putExtra("stts", "uri");
             }
+            //if (!(new File(String.valueOf(mOutputFileUri)).exists())) {
+            //    return;
+            //}
         }
-        if (resultCode == RESULT_OK) {
+        else if (resultCode == RESULT_OK) {
             if (requestCode == GALLERY_REQUEST) {
                 u = (Uri) data.getData();
                 intent.putExtra("uri", u);
                 intent.putExtra("stts", "uri");
             }
         }
+        else
+            return;
         startActivity(intent);
     }
 
